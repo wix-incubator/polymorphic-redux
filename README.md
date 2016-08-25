@@ -1,2 +1,2 @@
 # polymorphic-redux
-No more switch statements!
+No more switch statements
