@@ -13,6 +13,14 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wix/polymorphic-redux.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wix/polymorphic-redux/issues"
+  },
+  "homepage": "https://github.com/wix/polymorphic-redux",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && babel src -d dist",
