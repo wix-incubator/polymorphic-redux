@@ -27,11 +27,20 @@ export class Event {
    * @return a new state
    */
   newState(oldState, params) {
-    return _.merge({}, oldState, this.merge(oldState, params));
+    const removePath = this.remove(oldState, params);
+    if (removePath) {
+      return removeFromOldState(oldState, removePath);
+    }
+
+    const mergeDelta = this.merge(oldState, params);
+    if (mergeDelta) {
+      return mergeToOldState(oldState, mergeDelta);
+    }
+
+    return oldState;
   }
 
   /**
-   *
    * Helper method to override (instead of newState),
    * return only the delta you would like to be merged with the old state,
    * I will merge it for you.
@@ -41,6 +50,29 @@ export class Event {
    * @return a delta to merge the state with
    */
   merge(oldState, params) {
-    return oldState;
+    return undefined;
   }
+
+  /**
+   * Helper method to override (instead of newState),
+   * return only the path you would like to be removed from the old state,
+   * I will create a new state for you with this path removed.
+   *
+   * @param oldState
+   * @param params
+   * @return {String} path to remove from the state
+   */
+  remove(oldState, params) {
+    return undefined;
+  }
+}
+
+function removeFromOldState(oldState, removePath) {
+  const clone = _.clone(oldState);
+  _.unset(clone, removePath);
+  return clone;
+}
+
+function mergeToOldState(oldState, mergeDelta) {
+  return _.merge({}, oldState, mergeDelta);
 }

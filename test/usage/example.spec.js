@@ -57,7 +57,7 @@ describe('polymorphic-redux', () => {
     });
   });
 
-  it('remove todo', () => {
+  it('removing something from the state', () => {
     dispatch(AddTodoEvent.create({123: 'buy meat'}));
 
     expect(store.getState()).toEqual({

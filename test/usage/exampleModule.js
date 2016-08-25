@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {Reducer, Event} from './../src/index';
+import {Reducer, Event} from './../../src/index';
 
 // visible for testing
 export const initialState = {
@@ -26,13 +26,10 @@ export class AddTodoUsingMergeEvent extends TodosEvent {
   }
 }
 
-// another event, this time removing stuff from the old state
+// another event, this time removing stuff from the old state, using the remove helper function
 export class RemoveTodoEvent extends TodosEvent {
-  newState(oldState, params) {
-    return {
-      ...oldState,
-      todos: _.omit(oldState.todos, params)
-    };
+  remove(oldState, params) {
+    return `todos.${params}`;
   }
 }
 
