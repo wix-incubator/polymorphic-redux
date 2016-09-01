@@ -38,7 +38,7 @@ describe('Reducer', () => {
   describe('reducer created with a specific class of events to be listened to', () => {
     const initialState = {};
     const otherState = {};
-    const event = {_instance: {newState: () => otherState}};
+    const event = {_instance: {}};
 
     class EventClass {
       newState() {
