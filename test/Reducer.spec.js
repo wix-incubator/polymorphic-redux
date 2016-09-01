@@ -49,6 +49,7 @@ describe('Reducer', () => {
     }
     class OtherClass {
       newState() {
+        //nothing
       }
     }
 
