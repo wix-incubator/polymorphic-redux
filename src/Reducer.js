@@ -1,10 +1,12 @@
+import {Event} from './Event';
+
 export class Reducer {
   /**
    * Call this to create the reducer function to be sent to the store.
    *
    * @param initialState - initial state
-   * @param EventClass {Event} - the class of Event (and subtypes) this reducer should listen to
-   * @return {Reducer.reduce} This returns a reducer function which should be send to createStore() or combineReducers()
+   * @param EventClass {Class<Event>} - class of events that the reducer will listen to
+   * @return {Reducer.reduce} This returns a reducer function which should be sent to createStore() or combineReducers()
    */
   static create(initialState, EventClass) {
     return new Reducer(initialState, EventClass).reduce;
@@ -15,7 +17,7 @@ export class Reducer {
    */
   constructor(initialState, EventClass) {
     this.initialState = initialState;
-    this.EventClass = EventClass;
+    this.EventClass = EventClass || Event;
     this.reduce = this.reduce.bind(this);
   }
 
@@ -23,10 +25,14 @@ export class Reducer {
    * private. do not use.
    */
   reduce(state = this.initialState, event) {
-    if (event._instance && event._instance instanceof this.EventClass) {
+    if (implementsEventClass(event, this.EventClass)) {
       return event._instance.newState(state, event._instance.params);
     } else {
       return state;
     }
   }
+}
+
+function implementsEventClass(event, EventClass) {
+  return event && event._instance && event._instance instanceof EventClass;
 }
