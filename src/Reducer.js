@@ -34,5 +34,8 @@ export class Reducer {
 }
 
 function implementsEventClass(event, EventClass) {
-  return event && event._instance && event._instance instanceof EventClass;
+  return event &&
+         event._instance &&
+         event._instance.newState &&
+         event._instance instanceof EventClass;
 }
