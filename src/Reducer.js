@@ -25,7 +25,7 @@ export class Reducer {
    * private. do not use.
    */
   reduce(state = this.initialState, event) {
-    if (implementsEventClass(event, this.EventClass)) {
+    if (shouldHandle(event, this.EventClass)) {
       return event._instance.newState(state, event._instance.params);
     } else {
       return state;
@@ -33,6 +33,6 @@ export class Reducer {
   }
 }
 
-function implementsEventClass(event, EventClass) {
+function shouldHandle(event, EventClass) {
   return event && event._instance && event._instance instanceof EventClass;
 }
