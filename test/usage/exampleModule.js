@@ -23,21 +23,6 @@ export class AddTodoEvent extends Event {
   }
 }
 
-//
-//// another event, using 'merge' helper function instead of newState. Return only the delta of the state.
-//export class AddTodoUsingMergeEvent extends TodosEvent {
-//  merge(oldState, params) {
-//    return {todos: params};
-//  }
-//}
-//
-//// another event, this time removing stuff from the old state, using the remove helper function
-//export class RemoveTodoEvent extends TodosEvent {
-//  remove(oldState, params) {
-//    return `todos.${params}`;
-//  }
-//}
-
 /**
  * This is how you create the reducer, once, and send to the store.
  */

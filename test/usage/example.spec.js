@@ -2,7 +2,7 @@ import {createStore} from 'redux';
 
 import TodosReducer, {AddTodoEvent, initialState} from './exampleModule';
 
-xdescribe('polymorphic-redux', () => {
+describe('polymorphic-redux', () => {
   let store, dispatch;
   const originalInitialState = initialState;
 
@@ -37,41 +37,4 @@ xdescribe('polymorphic-redux', () => {
       }
     });
   });
-
-  //it('merge is implicitly immutable and even CLEANER then newState', () => {
-  //  expect(store.getState()).toEqual({todos: {}});
-  //
-  //  dispatch(AddTodoEvent.create({123: 'buy meat'}));
-  //
-  //  expect(store.getState()).toEqual({
-  //    todos: {
-  //      123: 'buy meat'
-  //    }
-  //  });
-  //
-  //  dispatch(AddTodoUsingMergeEvent.create({789: 'buy potatoes'}));
-  //
-  //  expect(store.getState()).toEqual({
-  //    todos: {
-  //      123: 'buy meat',
-  //      789: 'buy potatoes'
-  //    }
-  //  });
-  //});
-  //
-  //it('removing something from the state', () => {
-  //  dispatch(AddTodoEvent.create({123: 'buy meat'}));
-  //
-  //  expect(store.getState()).toEqual({
-  //    todos: {
-  //      123: 'buy meat'
-  //    }
-  //  });
-  //
-  //  dispatch(RemoveTodoEvent.create(123));
-  //
-  //  expect(store.getState()).toEqual({
-  //    todos: {}
-  //  });
-  //});
 });
