@@ -26,7 +26,13 @@ describe('UnsetEvent', () => {
   });
 
   it('unset deep path', () => {
-    const oldState = {todos: {123: 'buy milk', 456: 'buy meat', 789: {a: 1, b: 2}}};
+    const oldState = {
+      todos: {
+        123: 'buy milk',
+        456: 'buy meat',
+        789: {a: 1, b: 2}
+      }
+    };
     const action = UnsetEvent.create('todos.789.a');
     expect(action._instance.newState(oldState, action._instance.params)).toEqual({
       todos: {
