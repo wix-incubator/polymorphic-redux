@@ -1,16 +1,27 @@
-///**
-// * Helper method to override (instead of newState),
-// * return only the delta you would like to be merged with the old state,
-// * I will merge it for you.
-// *
-// * @param oldState
-// * @param params - the params you created the event with
-// * @return a delta to merge the state with
-// */
-//merge(oldState, params) {
-//  return undefined;
-//}
-//
+import {Event} from './Event';
+import _ from 'lodash';
+
+/**
+ * Helper class to extend which merges the result of the delta returned from 'getDelta' method
+ */
+export class MergeEvent extends Event {
+  newState(oldState, params) {
+    return _.merge({}, oldState, this.getDelta(oldState, params));
+  }
+
+  /**
+   * Helper method to override (instead of newState),
+   * return only the delta you would like to be merged with the old state
+   *
+   * @param oldState
+   * @param params
+   * @return {undefined} the delta to merge
+   */
+  getDelta(oldState, params) {
+    return params;
+  }
+}
+
 ///**
 // * Helper method to override (instead of newState),
 // * return only the path you would like to be removed from the old state,
@@ -28,8 +39,4 @@
 //  const clone = _.clone(oldState);
 //  _.unset(clone, removePath);
 //  return clone;
-//}
-//
-//function mergeToOldState(oldState, mergeDelta) {
-//  return _.merge({}, oldState, mergeDelta);
 //}
