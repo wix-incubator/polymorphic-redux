@@ -9,4 +9,8 @@ describe('index', () => {
   it('exports MergeEvent', () => {
     expect(index.MergeEvent).toBeDefined();
   });
+
+  it('exports UnsetEvent', () => {
+    expect(index.UnsetEvent).toBeDefined();
+  });
 });
