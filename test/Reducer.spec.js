@@ -38,7 +38,6 @@ describe('Reducer', () => {
   describe('reducer created with a specific class of events to be listened to', () => {
     const initialState = {};
     const otherState = {};
-    const event = {_instance: {}};
 
     class EventClass {
       newState() {
@@ -55,6 +54,7 @@ describe('Reducer', () => {
 
     it('listens to no events by default', () => {
       const r = Reducer.create(initialState);
+      const event = {_instance: {}};
       expect(r(initialState, event)).toBe(initialState);
     });
 

@@ -1,6 +1,6 @@
 export class Event {
   /**
-   * @type {string} optional prefix to be used in action.type. Can be used for analytics etc.
+   * @type {string} optional prefix to be used in action.type. Can be used for analytics etc. for example "com.example."
    */
   static namespace = '';
 
