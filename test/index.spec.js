@@ -5,12 +5,4 @@ describe('index', () => {
     expect(index.Event).toBeDefined();
     expect(index.Reducer).toBeDefined();
   });
-
-  it('exports MergeEvent', () => {
-    expect(index.MergeEvent).toBeDefined();
-  });
-
-  it('exports UnsetEvent', () => {
-    expect(index.UnsetEvent).toBeDefined();
-  });
 });
