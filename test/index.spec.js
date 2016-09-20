@@ -5,4 +5,9 @@ describe('index', () => {
     expect(index.Event).toBeDefined();
     expect(index.Reducer).toBeDefined();
   });
+
+  it('exports combineReducers and getStateProjection functions', () => {
+    expect(index.combineReducers).toBeDefined();
+    expect(index.getStateProjection).toBeDefined();
+  });
 });
