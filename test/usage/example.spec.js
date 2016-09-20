@@ -1,20 +1,14 @@
 import {createStore} from 'redux';
 
-import TodosReducer, {AddTodoEvent, initialState} from './exampleModule';
+import {TodosReducer, AddTodoEvent} from './exampleModule';
 
 describe('polymorphic-redux', () => {
   let store, dispatch;
-  const originalInitialState = initialState;
 
   beforeEach(() => {
-    store = createStore(TodosReducer);
+    store = createStore(new TodosReducer().reduce);
     dispatch = store.dispatch;
     expect(store.getState()).toEqual({todos: {}});
-  });
-
-  afterEach(() => {
-    expect(initialState).toBe(originalInitialState);
-    expect(initialState).toEqual({todos: {}});
   });
 
   it('is based on polymorphic principles, cleaner, and far less boilerplate', () => {

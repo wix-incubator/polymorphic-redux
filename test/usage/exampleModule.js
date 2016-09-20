@@ -2,13 +2,6 @@ import _ from 'lodash';
 import {Reducer, Event} from './../../src';
 
 /**
- * visible for testing
- */
-export const initialState = {
-  todos: {}
-};
-
-/**
  * this is your event - created by .create(params)
  */
 export class AddTodoEvent extends Event {
@@ -24,7 +17,24 @@ export class AddTodoEvent extends Event {
 }
 
 /**
- * This is how you create the reducer, once, and send to the store.
+ * This is one way you can define the reducer
  */
-const TodosReducer = Reducer.create(initialState);
-export default TodosReducer;
+export class TodosReducer extends Reducer {
+  getInitialState() {
+    return {
+      todos: {}
+    };
+  }
+
+  getEventSubscriptions() {
+    return [AddTodoEvent];
+  }
+
+  createSelectors(state) {
+    return {
+      getTodo(id) {
+        return state.todos[id];
+      }
+    };
+  }
+}

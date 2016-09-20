@@ -310,7 +310,7 @@
     "operator-assignment": 0,
     "operator-linebreak": [
       "error",
-      "before"
+      "after"
     ],
     "padded-blocks": [
       "error",

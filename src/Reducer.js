@@ -1,38 +1,113 @@
+import _ from 'lodash';
 import {Event} from './Event';
 
 export class Reducer {
-  /**
-   * Call this to create the reducer function to be sent to the store.
-   *
-   * @param initialState - initial state
-   * @param EventClass {Class<Event>} - class of events that the reducer will listen to
-   * @return {Reducer.reduce} This returns a reducer function which should be sent to createStore() or combineReducers()
-   */
-  static create(initialState, EventClass) {
-    return new Reducer(initialState, EventClass).reduce;
-  }
 
   /**
-   * private. do not use.
+   * @param params - name, initialState, eventSubscriptions, createSelectorsFn
+   * @return {Reducer}
    */
-  constructor(initialState, EventClass) {
-    this.initialState = initialState;
-    this.EventClass = EventClass || Event;
+  static create(params) {
+    verifyParams(params);
+    const {name, initialState, eventSubscriptions, createSelectorsFn} = params;
+    return new ReducerImpl(name, initialState, eventSubscriptions, createSelectorsFn);
+  }
+
+  constructor() {
     this.reduce = this.reduce.bind(this);
   }
 
   /**
-   * private. do not use.
+   * This is what you send to the store, using combineReducers function or directly
    */
-  reduce(state = this.initialState, event) {
-    if (shouldHandle(event, this.EventClass)) {
-      return event._instance.newState(state, event._instance.params);
+  reduce(state = this.getInitialState(), action) {
+    if (shouldHandle(action, this.getEventSubscriptions())) {
+      return action._instance.newState(state, action._instance.params);
     } else {
       return state;
     }
   }
+
+  selectors(fullState) {
+    return this.createSelectors(this.getStateProjection(fullState));
+  }
+
+  getStateProjection(fullState) {
+    return _.get(fullState, this.getName());
+  }
+
+  getName() {
+    return this.constructor.name;
+  }
+
+  getInitialState() {
+    throw new Error('must implement');
+  }
+
+  getEventSubscriptions() {
+    throw new Error('must implement');
+  }
+
+  createSelectors(state) {
+    throw new Error('must implement');
+  }
 }
 
-function shouldHandle(event, EventClass) {
-  return event && event._instance && event._instance instanceof EventClass;
+function shouldHandle(action, eventSubscriptions) {
+  return action &&
+         action._instance &&
+         action._instance instanceof Event &&
+         subscribedTo(action._instance, eventSubscriptions);
+}
+
+function subscribedTo(event, eventSubscriptions) {
+  if (_.isFunction(eventSubscriptions)) {
+    return event instanceof eventSubscriptions;
+  } else {
+    return _.find(eventSubscriptions, (clazz) => event instanceof clazz);
+  }
+}
+
+class ReducerImpl extends Reducer {
+  constructor(name, initialState, eventSubscriptions, createSelectorsFn) {
+    super();
+    this.name = name;
+    this.initialState = initialState;
+    this.eventSubscriptions = eventSubscriptions;
+    this.createSelectorsFn = createSelectorsFn;
+  }
+
+  getName() {
+    return this.name;
+  }
+
+  getInitialState() {
+    return this.initialState;
+  }
+
+  getEventSubscriptions() {
+    return this.eventSubscriptions;
+  }
+
+  createSelectors(state) {
+    return this.createSelectorsFn(state);
+  }
+}
+
+function verifyParams(params) {
+  if (!params) {
+    throw new Error('must provide params');
+  }
+  if (!params.name) {
+    throw new Error('must provide params.name');
+  }
+  if (!params.initialState) {
+    throw new Error('must provide params.initialState');
+  }
+  if (!params.eventSubscriptions) {
+    throw new Error('must provide params.eventSubscriptions');
+  }
+  if (!params.createSelectorsFn) {
+    throw new Error('must provide params.createSelectorsFn');
+  }
 }
