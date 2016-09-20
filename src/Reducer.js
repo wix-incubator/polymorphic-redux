@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import {Event} from './Event';
+import {getStateProjection as getProjection} from './CombinedReducers';
 
 export class Reducer {
 
@@ -28,12 +29,13 @@ export class Reducer {
     }
   }
 
-  selectors(fullState) {
-    return this.createSelectors(this.getStateProjection(fullState));
+  selectors(state) {
+    return this.createSelectors(this.getStateProjection(state));
   }
 
-  getStateProjection(fullState) {
-    return _.get(fullState, this.getName());
+  getStateProjection(state) {
+    const projection = getProjection(state, this);
+    return projection || state;
   }
 
   getName() {
@@ -41,15 +43,15 @@ export class Reducer {
   }
 
   getInitialState() {
-    throw new Error('must implement');
+    throw new Error('must implement getInitialState');
   }
 
   getEventSubscriptions() {
-    throw new Error('must implement');
+    throw new Error('must implement getEventSubscriptions');
   }
 
   createSelectors(state) {
-    throw new Error('must implement');
+    throw new Error('must implement createSelectors');
   }
 }
 

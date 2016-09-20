@@ -164,6 +164,12 @@ describe('Reducer', () => {
       expect(reducer.getStateProjection({a: {name: 'hello'}, MyReducer: {lastName: 'world'}})).toEqual({lastName: 'world'});
     });
 
+    it('access state projection returns state if no name in state', () => {
+      const reducer = new MyReducer();
+      expect(reducer.getName()).toEqual('MyReducer');
+      expect(reducer.getStateProjection({a: {name: 'hello'}})).toEqual({a: {name: 'hello'}});
+    });
+
     it('calling selectors creates the selectors using the state projection', () => {
       const reducer = new MyReducer();
       reducer.createSelectors = (state) => {

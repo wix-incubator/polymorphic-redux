@@ -7,11 +7,16 @@ export function combineReducers(...reducers) {
 
   _.forEach(reducers, (reducer) => {
     if (reducer instanceof Reducer) {
-      toCombine[reducer.name] = reducer.reduce;
+      toCombine[reducer.getName()] = reducer.reduce;
     } else {
-      //toCombine[]
+      _.merge(toCombine, reducer);
     }
   });
 
   return reduxCombine(toCombine);
+}
+
+export function getStateProjection(fullState, reducer) {
+  const name = reducer instanceof Reducer ? reducer.getName() : reducer;
+  return _.get(fullState, name);
 }
