@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {Event} from './Event';
-import {getStateProjection as getProjection} from './CombinedReducers';
+import * as CombinedReducers from './CombinedReducers';
 
 export class Reducer {
 
@@ -34,7 +34,7 @@ export class Reducer {
   }
 
   getStateProjection(state) {
-    const projection = getProjection(state, this);
+    const projection = CombinedReducers.getStateProjection(state, this);
     return projection || state;
   }
 
