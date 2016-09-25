@@ -33,9 +33,9 @@ export class Reducer {
     return this.createSelectors(this.getStateProjection(state));
   }
 
-  getStateProjection(state) {
-    const projection = CombinedReducers.getStateProjection(state, this);
-    return projection || state;
+  getStateProjection(fullState) {
+    const projection = CombinedReducers.getStateProjection(fullState, this);
+    return projection || fullState;
   }
 
   getName() {
@@ -43,15 +43,15 @@ export class Reducer {
   }
 
   getInitialState() {
-    throw new Error('must implement getInitialState');
+    throw new Error(`${this.getName()} must implement getInitialState`);
   }
 
   getEventSubscriptions() {
-    throw new Error('must implement getEventSubscriptions');
+    throw new Error(`${this.getName()} must implement getEventSubscriptions`);
   }
 
   createSelectors(state) {
-    throw new Error('must implement createSelectors');
+    throw new Error(`${this.getName()} must implement createSelectors(state)`);
   }
 }
 
