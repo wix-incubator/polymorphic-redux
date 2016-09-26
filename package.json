@@ -1,6 +1,6 @@
 {
   "name": "polymorphic-redux",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "No more switch statements!",
   "license": "MIT",
   "keywords": [
