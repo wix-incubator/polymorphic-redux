@@ -69,7 +69,14 @@ export class Event {
 }
 
 function mergeOldStateWithDelta(oldState, delta) {
-  return _.merge({}, oldState, delta);
+  return _.mergeWith({}, oldState, delta, customizer);
+}
+
+function customizer(objValue, srcValue, key, object, source, stack) {
+  if (srcValue === undefined) {
+    object[key] = undefined;
+  }
+  return undefined;
 }
 
 function removeFromOldState(oldState, removePath) {

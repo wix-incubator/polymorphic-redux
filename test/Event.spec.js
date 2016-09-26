@@ -70,6 +70,18 @@ describe('Event', () => {
         }
       });
     });
+
+    it('overrides previous values in state', () => {
+      class MergeEventOverride extends Event {
+        merge() {
+          return {loading: true, error: undefined};
+        }
+      }
+
+      const oldState = {loading: false, error: 'bad'};
+      const action = MergeEventOverride.create();
+      expect(action._instance.newState(oldState, action._instance.params)).toEqual({loading: true, error: undefined});
+    });
   });
 
   describe('"remove" helper method', () => {
